@@ -1,18 +1,14 @@
 import React from "react";
-import { connect } from "react-redux";
-import { updateAction } from "../actions/stepActions";
+import { useSelector } from "react-redux";
 
-const Result = (props) => {
+const Result = () => {
+  const yourDetails = useSelector((state) => state.yourDetails);
   return (
     <div className="container">
       <h2>Result</h2>
-      <pre>{JSON.stringify(props.yourDetails, null, 2)}</pre>
+      <pre>{JSON.stringify(yourDetails, null, 2)}</pre>
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return state;
-};
-
-export default connect(mapStateToProps, { updateAction })(Result);
+export default Result;

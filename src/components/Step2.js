@@ -1,18 +1,22 @@
 import React from "react";
 import { useForm, ErrorMessage } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { updateAction } from "../actions/stepActions";
 
-const Step2 = (props) => {
+const Step2 = () => {
+  const yourDetails = useSelector((state) => state.yourDetails);
+
+  const dispatch = useDispatch();
+
   const { handleSubmit, register, errors } = useForm({
-    defaultValues: props.yourDetails,
+    defaultValues: yourDetails,
   });
 
   const { push } = useHistory();
 
   const submitData = (data) => {
-    props.updateAction(data);
+    dispatch(updateAction(data));
     push("/result");
   };
 
@@ -56,8 +60,4 @@ const Step2 = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return state;
-};
-
-export default connect(mapStateToProps, { updateAction })(Step2);
+export default Step2;

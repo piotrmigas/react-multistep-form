@@ -1,18 +1,22 @@
 import React from "react";
 import { useForm, ErrorMessage } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateAction } from "../actions/stepActions";
 
-const Step1 = (props) => {
+const Step1 = () => {
+  const yourDetails = useSelector((state) => state.yourDetails);
+
+  const dispatch = useDispatch();
+
   const { handleSubmit, errors, register } = useForm({
-    defaultValues: props.yourDetails,
+    defaultValues: yourDetails,
   });
 
   const { push } = useHistory();
 
   const submitData = (data) => {
-    props.updateAction(data);
+    dispatch(updateAction(data));
     push("/step2");
   };
 
@@ -21,12 +25,20 @@ const Step1 = (props) => {
       <h2>Step 1</h2>
       <label>
         First Name:
-        <input name="firstName" ref={register({ required: "This is required." })} />
+        <input
+          name="firstName"
+          type="text"
+          ref={register({ required: "This is required." })}
+        />
         <ErrorMessage errors={errors} name="firstName" as="p" />
       </label>
       <label>
         Last Name:
-        <input name="lastName" ref={register({ required: "This is required." })} />
+        <input
+          name="lastName"
+          type="text"
+          ref={register({ required: "This is required." })}
+        />
         <ErrorMessage errors={errors} name="lastName" as="p" />
       </label>
       <input type="submit" value="Send" />
@@ -34,8 +46,4 @@ const Step1 = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return state;
-};
-
-export default connect(mapStateToProps, { updateAction })(Step1);
+export default Step1;
